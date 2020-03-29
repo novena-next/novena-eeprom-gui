@@ -6,6 +6,7 @@
 #include <string.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
+#include <linux/i2c.h>
 #include <linux/i2c-dev.h>
 #include <ctype.h>
 #include <errno.h>
@@ -173,7 +174,7 @@ bool EepromDev::readI2C(int fd, int addr, void *data, int count)
 {
     struct i2c_rdwr_ioctl_data session;
     struct i2c_msg messages[2];
-    char set_addr_buf[2];
+    unsigned char set_addr_buf[2];
 
     memset(set_addr_buf, 0, sizeof(set_addr_buf));
     memset(data, 0, count);
@@ -189,7 +190,7 @@ bool EepromDev::readI2C(int fd, int addr, void *data, int count)
     messages[1].addr = EepromAddress;
     messages[1].flags = I2C_M_RD;
     messages[1].len = count;
-    messages[1].buf = (char *) data;
+    messages[1].buf = (unsigned char *) data;
 
     session.msgs = messages;
     session.nmsgs = 2;
@@ -208,7 +209,7 @@ bool EepromDev::writeI2C(int fd, int addr, void *data, int count)
 {
     struct i2c_rdwr_ioctl_data session;
     struct i2c_msg messages[1];
-    char data_buf[2 + count];
+    unsigned char data_buf[2 + count];
 
     data_buf[0] = addr >> 8;
     data_buf[1] = addr;
