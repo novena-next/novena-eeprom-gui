@@ -1,3 +1,10 @@
+novena-eeprom-gui (1.3-r2) unstable; urgency=medium
+
+  * Fix build for Buster
+  * debian: Set myself as the maintainer
+
+ -- Jookia <contact@jookia.org>  Tue, 31 Mar 2020 20:34:07 +1100
+
 novena-eeprom-gui (1.3-r1) unstable; urgency=medium
 
   * Add lidbootblock feature
